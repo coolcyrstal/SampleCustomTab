@@ -1,12 +1,8 @@
 package com.example.chayent.samplecustomtab;
 
-import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -47,45 +43,29 @@ public class TabCustomManager {
         this.mActivity = mActivity;
     }
 
-    public void setDefaultTab() {
+    public void setCustomTextTab() {
         mThemeName = "DEFAULT";
         mTabLayout.setupWithViewPager(mViewPager);
         createCustomTab();
-        mTabLayout.setBackgroundColor(mActivity.getResources().getColor(R.color.colorPrimary));
-        mTabLayout.setSelectedTabIndicatorColor(mActivity.getResources().getColor(R.color.colorAccent));
-//        mTabLayout.getTabAt(mPreviousIndex).select();
     }
 
-    public void setImageTab(String themeName) {
+    public void setCustomImageTab(String themeName) {
         mThemeName = themeName;
         mTabLayout.setupWithViewPager(mViewPager);
-        if (themeName.equals("ANIMATION")) {
-            createCustomTab(R.raw.dino_dance, R.raw.dino_dance, R.raw.dino_dance, R.raw.dino_dance);
-        } else {
-            for (ImageResourceTab imageResourceTab : ImageResourceTab.values()) {
-                if (imageResourceTab.name().equals(themeName)) {
-                    createCustomTab(resizeImage(imageResourceTab.getIcFeature()),
-                            resizeImage(imageResourceTab.getIcGame()),
-                            resizeImage(imageResourceTab.getIcSocial()),
-                            resizeImage(imageResourceTab.getIcMarket()));
-                }
+        for (ImageResourceTab imageResourceTab : ImageResourceTab.values()) {
+            if (imageResourceTab.name().equals(themeName)) {
+                createCustomTab(imageResourceTab.getIcFeature(),
+                        imageResourceTab.getIcGame(),
+                        imageResourceTab.getIcSocial(),
+                        imageResourceTab.getIcMarket());
             }
         }
-        switch (themeName) {
-            case "PORING":
-                mTabLayout.setBackgroundColor(mActivity.getResources().getColor(R.color.colorAccent));
-                mTabLayout.setSelectedTabIndicatorColor(mActivity.getResources().getColor(R.color.colorPrimaryDark));
-                break;
-            case "POKEMON":
-                mTabLayout.setBackgroundColor(mActivity.getResources().getColor(R.color.colorPokemon));
-                mTabLayout.setSelectedTabIndicatorColor(mActivity.getResources().getColor(R.color.colorPrimaryDark));
-                break;
-            case "ANIMATION":
-                mTabLayout.setBackgroundColor(mActivity.getResources().getColor(R.color.colorPokemon));
-                mTabLayout.setSelectedTabIndicatorColor(mActivity.getResources().getColor(R.color.colorPrimaryDark));
-                break;
-        }
-//        mTabLayout.getTabAt(mPreviousIndex).select();
+    }
+
+    public void setCustomAnimationTab(String themeName) {
+        mThemeName = themeName;
+        mTabLayout.setupWithViewPager(mViewPager);
+        createCustomTab(R.raw.dino_dance, R.raw.dino_dance, R.raw.dino_dance, R.raw.dino_dance);
     }
 
     private void createCustomTab() {
@@ -95,18 +75,11 @@ public class TabCustomManager {
         setTabHeader(TabHeaderValue.MARKET.getTabIndex(), TabHeaderValue.MARKET.getTabHeaderText());
     }
 
-    private void createCustomTab(Drawable imageFeature, Drawable imageGame, Drawable imageSocial, Drawable imageMarket) {
+    private void createCustomTab(int imageFeature, int imageGame, int imageSocial, int imageMarket) {
         setTabHeader(TabHeaderValue.FEATURED.getTabIndex(), TabHeaderValue.FEATURED.getTabHeaderText(), imageFeature);
         setTabHeader(TabHeaderValue.GAME.getTabIndex(), TabHeaderValue.GAME.getTabHeaderText(), imageGame);
         setTabHeader(TabHeaderValue.SOCIAL.getTabIndex(), TabHeaderValue.SOCIAL.getTabHeaderText(), imageSocial);
         setTabHeader(TabHeaderValue.MARKET.getTabIndex(), TabHeaderValue.MARKET.getTabHeaderText(), imageMarket);
-    }
-
-    private void createCustomTab(int dino_dance, int dino_dance1, int dino_dance2, int dino_dance3) {
-        setTabHeader(TabHeaderValue.FEATURED.getTabIndex(), TabHeaderValue.FEATURED.getTabHeaderText(), dino_dance);
-        setTabHeader(TabHeaderValue.GAME.getTabIndex(), TabHeaderValue.GAME.getTabHeaderText(), dino_dance1);
-        setTabHeader(TabHeaderValue.SOCIAL.getTabIndex(), TabHeaderValue.SOCIAL.getTabHeaderText(), dino_dance2);
-        setTabHeader(TabHeaderValue.MARKET.getTabIndex(), TabHeaderValue.MARKET.getTabHeaderText(), dino_dance3);
     }
 
     private void setTabHeader(int tabIndex, String textHeader) {
@@ -116,48 +89,20 @@ public class TabCustomManager {
         mTabLayout.getTabAt(tabIndex).setCustomView(mCustomTabItemLayout);
     }
 
-    private void setTabHeader(int tabIndex, String textHeader, Drawable imageHeader) {
+    private void setTabHeader(int tabIndex, String textHeader, int imageHeader) {
         mCustomTabItemLayout = (FrameLayout) LayoutInflater.from(mActivity).inflate(R.layout.custom_tab, mTabLayout, false);
         mTabTextHeader = mCustomTabItemLayout.findViewById(R.id.custom_tab_text_view);
         mTabTextHeader.setText(textHeader);
-        mTabImageHeader = mCustomTabItemLayout.findViewById(R.id.custom_tab_image_view);
-        RequestOptions options = new RequestOptions().centerCrop().override(80).diskCacheStrategy(DiskCacheStrategy.ALL);
-        Glide.with(mActivity).load(imageHeader).apply(options).into(mTabImageHeader);
-        mTabLayout.getTabAt(tabIndex).setCustomView(mCustomTabItemLayout);
-    }
-
-    private void setTabHeader(int tabIndex, String textHeader, int animationView) {
-        mCustomTabItemLayout = (FrameLayout) LayoutInflater.from(mActivity).inflate(R.layout.custom_tab, mTabLayout, false);
-        mTabTextHeader = mCustomTabItemLayout.findViewById(R.id.custom_tab_text_view);
-        mTabTextHeader.setText(textHeader);
-        mTabAnimationHeader = mCustomTabItemLayout.findViewById(R.id.custom_tab_animation_view);
-//        LottieDrawable drawable = new LottieDrawable();
-//        LottieComposition.Factory.fromRawFile(mActivity, animationView, new OnCompositionLoadedListener() {
-//            @Override
-//            public void onCompositionLoaded(@Nullable LottieComposition composition) {
-//                drawable.setComposition(composition);
-//                drawable.playAnimation();
-//                drawable.setScale(0.3f);
-//                mTabAnimationHeader.setImageDrawable(drawable);
-//            }
-//        });
-//        mTabAnimationHeader.setScaleX(0.5f);
-        //  mTabAnimationHeader.setScaleY(0.3f);
-        // mTabAnimationHeader.setScale(0.3f);
-        mTabAnimationHeader.setVisibility(View.VISIBLE);
-//        mTabAnimationHeader.playAnimation();
-        mTabAnimationHeader.setAnimation(animationView);
-//        RequestOptions options = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL);
-//        Glide.with(mActivity).load(animationView).apply(options).into(mTabAnimationHeader);
-        mTabLayout.getTabAt(tabIndex).setCustomView(mCustomTabItemLayout);
-    }
-
-    private Drawable resizeImage(int imageID) {
-        Drawable image = ContextCompat.getDrawable(mActivity, imageID);
-        if (image != null) {
-            image.setBounds(0, 0, 80, 80);
+        if (mThemeName.equals("ANIMATION")) {
+            mTabAnimationHeader = mCustomTabItemLayout.findViewById(R.id.custom_tab_animation_view);
+            mTabAnimationHeader.setVisibility(View.VISIBLE);
+            mTabAnimationHeader.setAnimation(imageHeader);
+        } else {
+            mTabImageHeader = mCustomTabItemLayout.findViewById(R.id.custom_tab_image_view);
+            RequestOptions options = new RequestOptions().centerCrop().override(80).diskCacheStrategy(DiskCacheStrategy.ALL);
+            Glide.with(mActivity).load(imageHeader).apply(options).into(mTabImageHeader);
         }
-        return image;
+        mTabLayout.getTabAt(tabIndex).setCustomView(mCustomTabItemLayout);
     }
 
     public void setTabListener() {
@@ -269,7 +214,23 @@ public class TabCustomManager {
         }
     }
 
-    public int getPreviousIndex(){
+    public void setTabInitFocus() {
+        mTabLayout.getTabAt(0).select();
+    }
+
+    public void setTabPresentFocus() {
+        mTabLayout.getTabAt(getPreviousIndex()).select();
+    }
+
+    private int getPreviousIndex() {
         return mPreviousIndex;
+    }
+
+    public void setTabBackgroundColor(int colorId) {
+        mTabLayout.setBackgroundColor(mActivity.getResources().getColor(colorId));
+    }
+
+    public void setTabIndicatorColor(int colorId) {
+        mTabLayout.setSelectedTabIndicatorColor(mActivity.getResources().getColor(colorId));
     }
 }

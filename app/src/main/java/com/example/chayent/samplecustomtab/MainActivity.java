@@ -21,11 +21,11 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
-//    @BindView(R.id.toolbar)
-//    Toolbar toolbar;
-//
-//    @BindView(R.id.toolbar_text_title)
-//    TextView toolbarTextTitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.toolbar_text_title)
+    TextView toolbarTextTitle;
 
     @BindView(R.id.btn_default_theme)
     Button btnDefaultTheme;
@@ -44,44 +44,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-//        setToolBar();
+        setToolBar();
         mTabCustomManager = new TabCustomManager(viewPager, tabLayout, this);
         createViewPager(viewPager);
-        mTabCustomManager.setDefaultTab();
+        mTabCustomManager.setCustomTextTab();
         mTabCustomManager.setTabListener();
-        tabLayout.getTabAt(0).select();
+        mTabCustomManager.setTabInitFocus();
 
-        btnDefaultTheme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTabCustomManager.setDefaultTab();
-                tabLayout.getTabAt(mTabCustomManager.getPreviousIndex()).select();
-            }
-        });
-
-        btnPokemonTheme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTabCustomManager.setImageTab("POKEMON");
-                tabLayout.getTabAt(mTabCustomManager.getPreviousIndex()).select();
-            }
-        });
-
-        btnPoringTheme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTabCustomManager.setImageTab("PORING");
-                tabLayout.getTabAt(mTabCustomManager.getPreviousIndex()).select();
-            }
-        });
-
-        btnAnimationTheme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTabCustomManager.setImageTab("ANIMATION");
-                tabLayout.getTabAt(mTabCustomManager.getPreviousIndex()).select();
-            }
-        });
+        setButton();
     }
 
     private void createViewPager(ViewPager viewPager) {
@@ -93,8 +63,50 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-//    private void setToolBar(){
+    private void setToolBar(){
 //        setSupportActionBar(toolbar);
-//        toolbarTextTitle.setText("DEFAULT");
-//    }
+        toolbarTextTitle.setText("DEFAULT");
+    }
+
+    private void setButton(){
+        btnDefaultTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTabCustomManager.setCustomTextTab();
+                mTabCustomManager.setTabBackgroundColor(R.color.colorPrimary);
+                mTabCustomManager.setTabIndicatorColor(R.color.colorAccent);
+                mTabCustomManager.setTabPresentFocus();
+            }
+        });
+
+        btnPokemonTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTabCustomManager.setCustomImageTab("POKEMON");
+                mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
+                mTabCustomManager.setTabIndicatorColor(R.color.colorPrimaryDark);
+                mTabCustomManager.setTabPresentFocus();
+            }
+        });
+
+        btnPoringTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTabCustomManager.setCustomImageTab("PORING");
+                mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
+                mTabCustomManager.setTabIndicatorColor(R.color.colorPrimaryDark);
+                mTabCustomManager.setTabPresentFocus();
+            }
+        });
+
+        btnAnimationTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTabCustomManager.setCustomAnimationTab("ANIMATION");
+                mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
+                mTabCustomManager.setTabIndicatorColor(R.color.colorPrimaryDark);
+                mTabCustomManager.setTabPresentFocus();
+            }
+        });
+    }
 }
