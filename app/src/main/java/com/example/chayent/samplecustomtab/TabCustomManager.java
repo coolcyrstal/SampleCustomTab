@@ -35,7 +35,7 @@ public class TabCustomManager {
     private ImageView mTabImageHeader;
     private FrameLayout mCustomTabItemLayout;
     private String mThemeName = "";
-    private int mPreviousIndex = 0;
+    private int mPreviousIndex = -1;
 
     TabCustomManager(ViewPager mViewPager, TabLayout mTabLayout, Activity mActivity) {
         this.mViewPager = mViewPager;
@@ -47,6 +47,7 @@ public class TabCustomManager {
         mThemeName = "DEFAULT";
         mTabLayout.setupWithViewPager(mViewPager);
         createCustomTab();
+        setTabPresentFocus();
     }
 
     public void setCustomImageTab(String themeName) {
@@ -60,12 +61,14 @@ public class TabCustomManager {
                         imageResourceTab.getIcMarket());
             }
         }
+        setTabPresentFocus();
     }
 
     public void setCustomAnimationTab(String themeName) {
         mThemeName = themeName;
         mTabLayout.setupWithViewPager(mViewPager);
         createCustomTab(R.raw.dino_dance, R.raw.dino_dance, R.raw.dino_dance, R.raw.dino_dance);
+        setTabPresentFocus();
     }
 
     private void createCustomTab() {
@@ -218,7 +221,7 @@ public class TabCustomManager {
         mTabLayout.getTabAt(0).select();
     }
 
-    public void setTabPresentFocus() {
+    private void setTabPresentFocus() {
         mTabLayout.getTabAt(getPreviousIndex()).select();
     }
 

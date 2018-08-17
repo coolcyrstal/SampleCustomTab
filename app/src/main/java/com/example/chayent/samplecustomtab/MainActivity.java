@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
                 mTabCustomManager.setCustomTextTab();
                 mTabCustomManager.setTabBackgroundColor(R.color.colorPrimary);
                 mTabCustomManager.setTabIndicatorColor(R.color.colorAccent);
-                mTabCustomManager.setTabPresentFocus();
             }
         });
 
@@ -85,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 mTabCustomManager.setCustomImageTab("POKEMON");
                 mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
                 mTabCustomManager.setTabIndicatorColor(R.color.colorPrimaryDark);
-                mTabCustomManager.setTabPresentFocus();
             }
         });
 
@@ -95,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
                 mTabCustomManager.setCustomImageTab("PORING");
                 mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
                 mTabCustomManager.setTabIndicatorColor(R.color.colorPrimaryDark);
-                mTabCustomManager.setTabPresentFocus();
             }
         });
 
@@ -105,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 mTabCustomManager.setCustomAnimationTab("ANIMATION");
                 mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
                 mTabCustomManager.setTabIndicatorColor(R.color.colorPrimaryDark);
-                mTabCustomManager.setTabPresentFocus();
             }
         });
     }
