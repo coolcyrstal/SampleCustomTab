@@ -47,7 +47,6 @@ public class TabCustomManager {
         mThemeName = "DEFAULT";
         mTabLayout.setupWithViewPager(mViewPager);
         createCustomTab();
-        setTabPresentFocus();
     }
 
     public void setCustomImageTab(String themeName) {
@@ -61,14 +60,12 @@ public class TabCustomManager {
                         imageResourceTab.getIcMarket());
             }
         }
-        setTabPresentFocus();
     }
 
     public void setCustomAnimationTab(String themeName) {
         mThemeName = themeName;
         mTabLayout.setupWithViewPager(mViewPager);
         createCustomTab(R.raw.dino_dance, R.raw.dino_dance, R.raw.dino_dance, R.raw.dino_dance);
-        setTabPresentFocus();
     }
 
     private void createCustomTab() {
@@ -102,7 +99,9 @@ public class TabCustomManager {
             mTabAnimationHeader.setAnimation(imageHeader);
         } else {
             mTabImageHeader = mCustomTabItemLayout.findViewById(R.id.custom_tab_image_view);
-            RequestOptions options = new RequestOptions().centerCrop().override(80).diskCacheStrategy(DiskCacheStrategy.ALL);
+            mTabImageHeader.setVisibility(View.VISIBLE);
+//            mTabImageHeader.setAdjustViewBounds(true);
+            RequestOptions options = new RequestOptions().centerInside().centerCrop().override(72, 72).diskCacheStrategy(DiskCacheStrategy.ALL);
             Glide.with(mActivity).load(imageHeader).apply(options).into(mTabImageHeader);
         }
         mTabLayout.getTabAt(tabIndex).setCustomView(mCustomTabItemLayout);
@@ -115,14 +114,14 @@ public class TabCustomManager {
                 mPreviousIndex = tab.getPosition();
                 switch (mThemeName) {
                     case "DEFAULT":
-                        updateTab(mTabLayout.getTabAt(tab.getPosition()), R.id.custom_tab_text_view, R.color.colorWhite);
+                        updateTab(tab, R.id.custom_tab_text_view, R.color.colorWhite);
                         break;
                     case "PORING":
                     case "POKEMON":
-                        updateTab(mTabLayout.getTabAt(tab.getPosition()), R.id.custom_tab_text_view, R.id.custom_tab_image_view, (float) 1.5, R.color.colorWhite, false);
+                        updateTab(tab, R.id.custom_tab_text_view, R.id.custom_tab_image_view, (float) 1.5, R.color.colorWhite, false);
                         break;
                     case "ANIMATION":
-                        updateTab(mTabLayout.getTabAt(tab.getPosition()), R.id.custom_tab_text_view, R.id.custom_tab_animation_view, (float) 1.5, R.color.colorWhite, true);
+                        updateTab(tab, R.id.custom_tab_text_view, R.id.custom_tab_animation_view, (float) 1.5, R.color.colorWhite, true);
                         break;
                 }
             }
@@ -131,14 +130,14 @@ public class TabCustomManager {
             public void onTabUnselected(TabLayout.Tab tab) {
                 switch (mThemeName) {
                     case "DEFAULT":
-                        updateTab(mTabLayout.getTabAt(tab.getPosition()), R.id.custom_tab_text_view, R.color.colorBlack);
+                        updateTab(tab, R.id.custom_tab_text_view, R.color.colorBlack);
                         break;
                     case "PORING":
                     case "POKEMON":
-                        updateTab(mTabLayout.getTabAt(tab.getPosition()), R.id.custom_tab_text_view, R.id.custom_tab_image_view, 1, R.color.colorBlack, false);
+                        updateTab(tab, R.id.custom_tab_text_view, R.id.custom_tab_image_view, 1, R.color.colorBlack, false);
                         break;
                     case "ANIMATION":
-                        updateTab(mTabLayout.getTabAt(tab.getPosition()), R.id.custom_tab_text_view, R.id.custom_tab_animation_view, 1, R.color.colorBlack, false);
+                        updateTab(tab, R.id.custom_tab_text_view, R.id.custom_tab_animation_view, 1, R.color.colorBlack, false);
                         break;
                 }
             }
@@ -148,14 +147,14 @@ public class TabCustomManager {
                 mPreviousIndex = tab.getPosition();
                 switch (mThemeName) {
                     case "DEFAULT":
-                        updateTab(mTabLayout.getTabAt(tab.getPosition()), R.id.custom_tab_text_view, R.color.colorWhite);
+                        updateTab(tab, R.id.custom_tab_text_view, R.color.colorWhite);
                         break;
                     case "PORING":
                     case "POKEMON":
-                        updateTab(mTabLayout.getTabAt(tab.getPosition()), R.id.custom_tab_text_view, R.id.custom_tab_image_view, (float) 1.5, R.color.colorWhite, false);
+                        updateTab(tab, R.id.custom_tab_text_view, R.id.custom_tab_image_view, (float) 1.5, R.color.colorWhite, false);
                         break;
                     case "ANIMATION":
-                        updateTab(mTabLayout.getTabAt(tab.getPosition()), R.id.custom_tab_text_view, R.id.custom_tab_animation_view, (float) 1.5, R.color.colorWhite, true);
+                        updateTab(tab, R.id.custom_tab_text_view, R.id.custom_tab_animation_view, (float) 1.5, R.color.colorWhite, true);
                         break;
                 }
             }
@@ -163,6 +162,38 @@ public class TabCustomManager {
     }
 
     private void updateTab(TabLayout.Tab tab, int textId, int textColor) {
+        Method method = null;
+        try {
+            method = TabLayout.Tab.class.getDeclaredMethod("getCustomView", null);
+            method.setAccessible(true);
+
+            View tabView = (View) method.invoke(tab, null);
+            final TextView tabItemTextHeader = tabView.findViewById(textId);
+            tabItemTextHeader.setTextColor(mActivity.getResources().getColor(textColor));
+
+            tab.setCustomView(tabView);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateTabChangeTextSize(TabLayout.Tab tab, int textId, int textSize){
+        Method method = null;
+        try {
+            method = TabLayout.Tab.class.getDeclaredMethod("getCustomView", null);
+            method.setAccessible(true);
+
+            View tabView = (View) method.invoke(tab, null);
+            final TextView tabItemTextHeader = tabView.findViewById(textId);
+            tabItemTextHeader.setTextColor(mActivity.getResources().getColor(textSize));
+
+            tab.setCustomView(tabView);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateTabChangeTextColor(TabLayout.Tab tab, int textId, int textColor){
         Method method = null;
         try {
             method = TabLayout.Tab.class.getDeclaredMethod("getCustomView", null);
@@ -221,7 +252,7 @@ public class TabCustomManager {
         mTabLayout.getTabAt(0).select();
     }
 
-    private void setTabPresentFocus() {
+    public void setTabPresentFocus() {
         mTabLayout.getTabAt(getPreviousIndex()).select();
     }
 
@@ -235,5 +266,13 @@ public class TabCustomManager {
 
     public void setTabIndicatorColor(int colorId) {
         mTabLayout.setSelectedTabIndicatorColor(mActivity.getResources().getColor(colorId));
+    }
+
+    public void setTabIndicatorVisible(boolean indicatorVisible) {
+        if (indicatorVisible) {
+            mTabLayout.setSelectedTabIndicatorHeight(5);
+        } else {
+            mTabLayout.setSelectedTabIndicatorHeight(0);
+        }
     }
 }
