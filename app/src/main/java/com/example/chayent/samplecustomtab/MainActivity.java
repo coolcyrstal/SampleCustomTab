@@ -5,6 +5,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -63,12 +65,15 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-    private void setToolBar(){
-//        setSupportActionBar(toolbar);
-        toolbarTextTitle.setText("DEFAULT");
+    private void setToolBar() {
+        toolbar.setPadding(24, 0, 0, 0);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setIcon(R.drawable.ic_action_name);
+//        toolbarTextTitle.setText("DEFAULT");
     }
 
-    private void setButton(){
+    private void setButton() {
         btnDefaultTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,5 +113,12 @@ public class MainActivity extends AppCompatActivity {
                 mTabCustomManager.setTabPresentFocus();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu, menu);
+        return true;
     }
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_default"
+            android:title="@string/menu_default" />
+        <item
+            android:id="@+id/nav_pokemon"
+            android:icon="@drawable/ic_pokemon_feature"
+            android:title="@string/menu_pokemon" />
+        <item
+            android:id="@+id/nav_poring"
+            android:icon="@drawable/ic_poring_feature"
+            android:title="@string/menu_poring" />
+        <item
+            android:id="@+id/nav_animation"
+            android:title="@string/menu_animation" />
+    </group>
+</menu>

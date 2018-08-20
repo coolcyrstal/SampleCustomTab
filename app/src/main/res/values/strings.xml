@@ -3,4 +3,9 @@
 
     <string name="text_tab_header_image">tab header image</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="menu_default">DEFAULT</string>
+    <string name="menu_pokemon">POKEMON</string>
+    <string name="menu_poring">PORING</string>
+    <string name="menu_animation">ANIMATION</string>
 </resources>
