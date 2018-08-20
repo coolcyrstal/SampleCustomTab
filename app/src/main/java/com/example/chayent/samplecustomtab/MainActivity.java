@@ -1,12 +1,15 @@
 package com.example.chayent.samplecustomtab;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.appbar_layout)
+    AppBarLayout appBarLayout;
 
     @BindView(R.id.toolbar_text_title)
     TextView toolbarTextTitle;
@@ -78,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mTabCustomManager.setCustomTextTab();
-                mTabCustomManager.setTabBackgroundColor(R.color.colorPrimary);
+//                mTabCustomManager.setTabBackgroundColor(R.color.colorPrimary);
                 mTabCustomManager.setTabIndicatorColor(R.color.colorAccent);
                 mTabCustomManager.setTabPresentFocus();
             }
@@ -88,9 +93,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mTabCustomManager.setCustomImageTab("POKEMON");
-                mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
+//                mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
                 mTabCustomManager.setTabIndicatorColor(R.color.colorPrimaryDark);
                 mTabCustomManager.setTabPresentFocus();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    appBarLayout.setBackground(getDrawable(R.drawable.pokemon_background));
+//                    getSupportActionBar().setBackgroundDrawable(getDrawable(R.drawable.pokemon_background));
+                }
             }
         });
 
@@ -98,9 +107,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mTabCustomManager.setCustomImageTab("PORING");
-                mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
+//                mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
                 mTabCustomManager.setTabIndicatorColor(R.color.colorPrimaryDark);
                 mTabCustomManager.setTabPresentFocus();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    appBarLayout.setBackground(getDrawable(R.drawable.poring_background));
+//                    getSupportActionBar().setBackgroundDrawable(getDrawable(R.drawable.poring_background));
+                }
             }
         });
 
@@ -108,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mTabCustomManager.setCustomAnimationTab("ANIMATION");
-                mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
+//                mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
                 mTabCustomManager.setTabIndicatorColor(R.color.colorPrimaryDark);
                 mTabCustomManager.setTabPresentFocus();
             }
@@ -120,5 +133,19 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.action_search:
+                return true;
+            case R.id.action_notification:
+                return true;
+            case R.id.action_feedback:
+                return true;
+            default:
+                return super.onOptionsItemSelected(menuItem);
+        }
     }
 }

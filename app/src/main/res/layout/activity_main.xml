@@ -7,23 +7,40 @@
     tools:context=".MainActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="138dp"
+        android:background="@drawable/poring_background"
+        android:fitsSystemWindows="true">
 
-        <include layout="@layout/custom_toolbar"/>
-        <!--<android.support.v7.widget.Toolbar-->
-        <!--android:id="@+id/toolbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="?attr/actionBarSize"-->
-        <!--android:background="@color/colorWhite"-->
-        <!--app:layout_scrollFlags="scroll|enterAlways" />-->
+        <!--<include layout="@layout/custom_toolbar"/>-->
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp">
+
+            <TextView
+                android:id="@+id/toolbar_text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="@color/colorBlack"
+                android:textSize="22sp"
+                android:textStyle="normal"
+                tools:text="Toolbar" />
+
+        </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/main_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_gravity="bottom"
-            android:background="@color/colorPrimary"
             app:tabGravity="fill"
             app:tabMode="scrollable" />
     </android.support.design.widget.AppBarLayout>
