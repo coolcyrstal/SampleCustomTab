@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.chayent.samplecustomtab.adapter.ViewPagerAdapter;
 import com.example.chayent.samplecustomtab.enumerator.TabHeaderValue;
+import com.example.chayent.samplecustomtab.enumerator.ToolbarIconIndex;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,19 +88,19 @@ public class MainActivity extends AppCompatActivity {
         btnPokemonTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTabCustomManager.setCustomImageTab("POKEMON");
+                mTabCustomManager.setCustomImageTab(AppConstant.THEME_NAME_POKEMON);
 //                mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
                 mTabCustomManager.setTabIndicatorColor(R.color.colorPrimaryDark);
                 mTabCustomManager.setTabPresentFocus();
                 mAppBarCustomManager.setImageBackground(R.drawable.pokemon_background);
-                mAppBarCustomManager.setIconImage(mMenu, R.drawable.menu_pokemon_search);
+                mAppBarCustomManager.setIconImage(mMenu, R.drawable.menu_pokemon_search, ToolbarIconIndex.SEARCH.getIconIndex());
             }
         });
 
         btnPoringTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTabCustomManager.setCustomImageTab("PORING");
+                mTabCustomManager.setCustomImageTab(AppConstant.THEME_NAME_PORING);
 //                mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
                 mTabCustomManager.setTabIndicatorColor(R.color.colorPrimaryDark);
                 mTabCustomManager.setTabPresentFocus();
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         btnAnimationTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTabCustomManager.setCustomAnimationTab("ANIMATION");
+                mTabCustomManager.setCustomAnimationTab(AppConstant.THEME_NAME_ANIMATION);
 //                mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
                 mTabCustomManager.setTabIndicatorColor(R.color.colorPrimaryDark);
                 mTabCustomManager.setTabPresentFocus();

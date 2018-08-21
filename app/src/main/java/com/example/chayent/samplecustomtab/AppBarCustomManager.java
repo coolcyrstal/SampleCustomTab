@@ -8,7 +8,6 @@ import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.widget.Toolbar;
 
 /**
  * AppBarCustomManager.java
@@ -34,16 +33,10 @@ public class AppBarCustomManager {
     }
 
     private void setToolBar() {
-        mToolbar.setPadding(24, 0, 0, 0);
+        mToolbar.setPadding(24, AppConstant.SCALE_DEFAULT_VALUE, AppConstant.SCALE_DEFAULT_VALUE, AppConstant.SCALE_DEFAULT_VALUE);
         ((AppCompatActivity)mActivity).setSupportActionBar(mToolbar);
         ((AppCompatActivity)mActivity).getSupportActionBar().setDisplayShowTitleEnabled(false);
         ((AppCompatActivity)mActivity).getSupportActionBar().setIcon(R.drawable.ic_action_name);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            mActivity.setActionBar(mToolbar);
-//            mActivity.getActionBar().setDisplayShowTitleEnabled(false);
-//            mActivity.getActionBar().setIcon(R.drawable.ic_action_name);
-//        }
-//        toolbarTextTitle.setText("DEFAULT");
     }
 
     public void setImageBackground(int imageId) {
@@ -59,9 +52,9 @@ public class AppBarCustomManager {
         }
     }
 
-    public void setIconImage(Menu menu, int imageId) {
+    public void setIconImage(Menu menu, int imageId, int itemIndex) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            menu.getItem(0).setIcon(mActivity.getDrawable(imageId));
+            menu.getItem(itemIndex).setIcon(mActivity.getDrawable(imageId));
         }
     }
 
@@ -80,7 +73,7 @@ public class AppBarCustomManager {
         if (imageBitmap.getHeight() <= scaleY) {
             scaleY = imageBitmap.getHeight();
         }
-        Bitmap bitmapCrop = Bitmap.createBitmap(imageBitmap, 0, 0, scaleX, scaleY);
+        Bitmap bitmapCrop = Bitmap.createBitmap(imageBitmap, AppConstant.SCALE_DEFAULT_VALUE, AppConstant.SCALE_DEFAULT_VALUE, scaleX, scaleY);
 //        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, sizeX, sizeY, false);
         image = new BitmapDrawable(mActivity.getResources(), bitmapCrop);
         return image;

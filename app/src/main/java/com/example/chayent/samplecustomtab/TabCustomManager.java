@@ -37,6 +37,9 @@ public class TabCustomManager {
     private FrameLayout mCustomTabItemLayout;
     private String mThemeName = "";
     private int mPreviousIndex = -1;
+    private float mImageScaleSize;
+    private int mTextColorId;
+    private boolean[] isAnimationPlay;
 
     TabCustomManager(ViewPager mViewPager, TabLayout mTabLayout, Activity mActivity) {
         this.mViewPager = mViewPager;
@@ -45,7 +48,7 @@ public class TabCustomManager {
     }
 
     public void setCustomTextTab() {
-        mThemeName = "DEFAULT";
+        mThemeName = AppConstant.THEME_NAME_DEFAULT;
         mTabLayout.setupWithViewPager(mViewPager);
         createCustomTab();
     }
@@ -94,7 +97,7 @@ public class TabCustomManager {
         mCustomTabItemLayout = (FrameLayout) LayoutInflater.from(mActivity).inflate(R.layout.custom_tab, mTabLayout, false);
         mTabTextHeader = mCustomTabItemLayout.findViewById(R.id.custom_tab_text_view);
         mTabTextHeader.setText(textHeader);
-        if (mThemeName.equals("ANIMATION")) {
+        if (mThemeName.equals(AppConstant.THEME_NAME_ANIMATION)) {
             mTabAnimationHeader = mCustomTabItemLayout.findViewById(R.id.custom_tab_animation_view);
             mTabAnimationHeader.setVisibility(View.VISIBLE);
             mTabAnimationHeader.setAnimation(imageHeader);
@@ -113,53 +116,44 @@ public class TabCustomManager {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mPreviousIndex = tab.getPosition();
-                switch (mThemeName) {
-                    case "DEFAULT":
-                        updateTab(tab, R.id.custom_tab_text_view, R.color.colorWhite);
-                        break;
-                    case "PORING":
-                    case "POKEMON":
-                        updateTab(tab, R.id.custom_tab_text_view, R.id.custom_tab_image_view, (float) 1.5, R.color.colorWhite, false);
-                        break;
-                    case "ANIMATION":
-                        updateTab(tab, R.id.custom_tab_text_view, R.id.custom_tab_animation_view, (float) 1.5, R.color.colorWhite, true);
-                        break;
-                }
+                mImageScaleSize = (float) 1.5;
+                mTextColorId = R.color.colorWhite;
+                isAnimationPlay = new boolean[]{false, true};
+                checkThemeUpdateTab(tab, mImageScaleSize, mTextColorId, isAnimationPlay);
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                switch (mThemeName) {
-                    case "DEFAULT":
-                        updateTab(tab, R.id.custom_tab_text_view, R.color.colorBlack);
-                        break;
-                    case "PORING":
-                    case "POKEMON":
-                        updateTab(tab, R.id.custom_tab_text_view, R.id.custom_tab_image_view, 1, R.color.colorBlack, false);
-                        break;
-                    case "ANIMATION":
-                        updateTab(tab, R.id.custom_tab_text_view, R.id.custom_tab_animation_view, 1, R.color.colorBlack, false);
-                        break;
-                }
+                mImageScaleSize = (float) 1;
+                mTextColorId = R.color.colorBlack;
+                isAnimationPlay = new boolean[]{false, false};
+                checkThemeUpdateTab(tab, mImageScaleSize, mTextColorId, isAnimationPlay);
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 mPreviousIndex = tab.getPosition();
-                switch (mThemeName) {
-                    case "DEFAULT":
-                        updateTab(tab, R.id.custom_tab_text_view, R.color.colorWhite);
-                        break;
-                    case "PORING":
-                    case "POKEMON":
-                        updateTab(tab, R.id.custom_tab_text_view, R.id.custom_tab_image_view, (float) 1.5, R.color.colorWhite, false);
-                        break;
-                    case "ANIMATION":
-                        updateTab(tab, R.id.custom_tab_text_view, R.id.custom_tab_animation_view, (float) 1.5, R.color.colorWhite, true);
-                        break;
-                }
+                mImageScaleSize = (float) 1.5;
+                mTextColorId = R.color.colorWhite;
+                isAnimationPlay = new boolean[]{false, true};
+                checkThemeUpdateTab(tab, mImageScaleSize, mTextColorId, isAnimationPlay);
             }
         });
+    }
+
+    private void checkThemeUpdateTab(TabLayout.Tab tab, float imageScaleSize, int colorTextId, boolean[] animationPlay) {
+        switch (mThemeName) {
+            case AppConstant.THEME_NAME_DEFAULT:
+                updateTab(tab, R.id.custom_tab_text_view, colorTextId);
+                break;
+            case AppConstant.THEME_NAME_PORING:
+            case AppConstant.THEME_NAME_POKEMON:
+                updateTab(tab, R.id.custom_tab_text_view, R.id.custom_tab_image_view, imageScaleSize, colorTextId, animationPlay[0]);
+                break;
+            case AppConstant.THEME_NAME_ANIMATION:
+                updateTab(tab, R.id.custom_tab_text_view, R.id.custom_tab_animation_view, imageScaleSize, colorTextId, animationPlay[1]);
+                break;
+        }
     }
 
     private void updateTab(TabLayout.Tab tab, int textId, int textColor) {
@@ -178,7 +172,7 @@ public class TabCustomManager {
         }
     }
 
-    public void updateTabChangeTextSize(TabLayout.Tab tab, int textId, int textSize){
+    public void updateTabChangeTextSize(TabLayout.Tab tab, int textId, int textSize) {
         Method method = null;
         try {
             method = TabLayout.Tab.class.getDeclaredMethod("getCustomView", null);
@@ -194,7 +188,7 @@ public class TabCustomManager {
         }
     }
 
-    public void updateTabChangeTextColor(TabLayout.Tab tab, int textId, int textColor){
+    public void updateTabChangeTextColor(TabLayout.Tab tab, int textId, int textColor) {
         Method method = null;
         try {
             method = TabLayout.Tab.class.getDeclaredMethod("getCustomView", null);
@@ -221,7 +215,7 @@ public class TabCustomManager {
             final TextView tabItemTextHeader = tabView.findViewById(textId);
             tabItemTextHeader.setTextColor(mActivity.getResources().getColor(textColor));
 
-            if (!mThemeName.equals("ANIMATION")) {
+            if (!mThemeName.equals(AppConstant.THEME_NAME_ANIMATION)) {
                 final ImageView tabItemImageHeader = tabView.findViewById(imageID);
                 tabItemImageHeader.setScaleX(imageSize);
                 tabItemImageHeader.setScaleY(imageSize);
