@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnAnimationTheme;
 
     private TabCustomManager mTabCustomManager;
+    private AppBarCustomManager mAppBarCustomManager;
+    private Menu mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         setToolBar();
         mTabCustomManager = new TabCustomManager(viewPager, tabLayout, this);
+        mAppBarCustomManager = new AppBarCustomManager(this, appBarLayout);
         createViewPager(viewPager);
         mTabCustomManager.setCustomTextTab();
         mTabCustomManager.setTabListener();
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
 //                mTabCustomManager.setTabBackgroundColor(R.color.colorPrimary);
                 mTabCustomManager.setTabIndicatorColor(R.color.colorAccent);
                 mTabCustomManager.setTabPresentFocus();
+                mAppBarCustomManager.setColorBackground(R.color.colorPrimary);
             }
         });
 
@@ -96,10 +100,8 @@ public class MainActivity extends AppCompatActivity {
 //                mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
                 mTabCustomManager.setTabIndicatorColor(R.color.colorPrimaryDark);
                 mTabCustomManager.setTabPresentFocus();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    appBarLayout.setBackground(getDrawable(R.drawable.pokemon_background));
-//                    getSupportActionBar().setBackgroundDrawable(getDrawable(R.drawable.pokemon_background));
-                }
+                mAppBarCustomManager.setImageBackground(R.drawable.pokemon_background);
+                mAppBarCustomManager.setIconImage(mMenu, R.drawable.menu_pokemon_search);
             }
         });
 
@@ -110,10 +112,7 @@ public class MainActivity extends AppCompatActivity {
 //                mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
                 mTabCustomManager.setTabIndicatorColor(R.color.colorPrimaryDark);
                 mTabCustomManager.setTabPresentFocus();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    appBarLayout.setBackground(getDrawable(R.drawable.poring_background));
-//                    getSupportActionBar().setBackgroundDrawable(getDrawable(R.drawable.poring_background));
-                }
+                mAppBarCustomManager.setImageBackground(R.drawable.poring_background);
             }
         });
 
@@ -124,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
 //                mTabCustomManager.setTabBackgroundColor(R.color.colorPokemon);
                 mTabCustomManager.setTabIndicatorColor(R.color.colorPrimaryDark);
                 mTabCustomManager.setTabPresentFocus();
+                mAppBarCustomManager.setColorBackground(R.color.colorPokemon);
             }
         });
     }
@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_menu, menu);
+        this.mMenu = menu;
         return true;
     }
 
