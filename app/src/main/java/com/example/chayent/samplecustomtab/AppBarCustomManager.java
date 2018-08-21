@@ -6,7 +6,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.widget.Toolbar;
 
 /**
  * AppBarCustomManager.java
@@ -18,10 +20,30 @@ public class AppBarCustomManager {
 
     private Activity mActivity;
     private AppBarLayout mAppBarLayout;
+    private android.support.v7.widget.Toolbar mToolbar;
 
     AppBarCustomManager(Activity mActivity, AppBarLayout mAppBarLayout) {
         this.mActivity = mActivity;
         this.mAppBarLayout = mAppBarLayout;
+    }
+
+    public AppBarCustomManager setToolbar(android.support.v7.widget.Toolbar toolbar) {
+        this.mToolbar = toolbar;
+        setToolBar();
+        return this;
+    }
+
+    private void setToolBar() {
+        mToolbar.setPadding(24, 0, 0, 0);
+        ((AppCompatActivity)mActivity).setSupportActionBar(mToolbar);
+        ((AppCompatActivity)mActivity).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ((AppCompatActivity)mActivity).getSupportActionBar().setIcon(R.drawable.ic_action_name);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            mActivity.setActionBar(mToolbar);
+//            mActivity.getActionBar().setDisplayShowTitleEnabled(false);
+//            mActivity.getActionBar().setIcon(R.drawable.ic_action_name);
+//        }
+//        toolbarTextTitle.setText("DEFAULT");
     }
 
     public void setImageBackground(int imageId) {
@@ -31,13 +53,13 @@ public class AppBarCustomManager {
         }
     }
 
-    public void setColorBackground(int colorId){
+    public void setColorBackground(int colorId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mAppBarLayout.setBackgroundColor(mActivity.getColor(colorId));
         }
     }
 
-    public void setIconImage(Menu menu, int imageId){
+    public void setIconImage(Menu menu, int imageId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             menu.getItem(0).setIcon(mActivity.getDrawable(imageId));
         }

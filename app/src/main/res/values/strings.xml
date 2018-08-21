@@ -8,4 +8,6 @@
     <string name="menu_pokemon">POKEMON</string>
     <string name="menu_poring">PORING</string>
     <string name="menu_animation">ANIMATION</string>
+
+    <string name="method_text_get_custom_view">getCustomView</string>
 </resources>

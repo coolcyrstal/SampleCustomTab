@@ -53,9 +53,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        setToolBar();
+        mAppBarCustomManager = new AppBarCustomManager(this, appBarLayout).setToolbar(toolbar);
         mTabCustomManager = new TabCustomManager(viewPager, tabLayout, this);
-        mAppBarCustomManager = new AppBarCustomManager(this, appBarLayout);
         createViewPager(viewPager);
         mTabCustomManager.setCustomTextTab();
         mTabCustomManager.setTabListener();
@@ -71,14 +70,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFrag(new TabLayoutFragment(), TabHeaderValue.SOCIAL.getTabHeaderText());
         adapter.addFrag(new TabLayoutFragment(), TabHeaderValue.MARKET.getTabHeaderText());
         viewPager.setAdapter(adapter);
-    }
-
-    private void setToolBar() {
-        toolbar.setPadding(24, 0, 0, 0);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setIcon(R.drawable.ic_action_name);
-//        toolbarTextTitle.setText("DEFAULT");
     }
 
     private void setButton() {

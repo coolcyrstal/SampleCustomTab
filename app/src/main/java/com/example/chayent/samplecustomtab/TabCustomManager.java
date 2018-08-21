@@ -18,6 +18,7 @@ import com.example.chayent.samplecustomtab.enumerator.ImageResourceTab;
 import com.example.chayent.samplecustomtab.enumerator.TabHeaderValue;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 /**
  * TabCustomManager.java
@@ -86,7 +87,7 @@ public class TabCustomManager {
         mCustomTabItemLayout = (FrameLayout) LayoutInflater.from(mActivity).inflate(R.layout.custom_tab, mTabLayout, false);
         mTabTextHeader = mCustomTabItemLayout.findViewById(R.id.custom_tab_text_view);
         mTabTextHeader.setText(textHeader);
-        mTabLayout.getTabAt(tabIndex).setCustomView(mCustomTabItemLayout);
+        Objects.requireNonNull(mTabLayout.getTabAt(tabIndex)).setCustomView(mCustomTabItemLayout);
     }
 
     private void setTabHeader(int tabIndex, String textHeader, int imageHeader) {
@@ -104,7 +105,7 @@ public class TabCustomManager {
             RequestOptions options = new RequestOptions().centerInside().centerCrop().override(72, 72).diskCacheStrategy(DiskCacheStrategy.ALL);
             Glide.with(mActivity).load(imageHeader).apply(options).into(mTabImageHeader);
         }
-        mTabLayout.getTabAt(tabIndex).setCustomView(mCustomTabItemLayout);
+        Objects.requireNonNull(mTabLayout.getTabAt(tabIndex)).setCustomView(mCustomTabItemLayout);
     }
 
     public void setTabListener() {
@@ -249,11 +250,11 @@ public class TabCustomManager {
     }
 
     public void setTabInitFocus() {
-        mTabLayout.getTabAt(0).select();
+        Objects.requireNonNull(mTabLayout.getTabAt(0)).select();
     }
 
     public void setTabPresentFocus() {
-        mTabLayout.getTabAt(getPreviousIndex()).select();
+        Objects.requireNonNull(mTabLayout.getTabAt(getPreviousIndex())).select();
     }
 
     private int getPreviousIndex() {
